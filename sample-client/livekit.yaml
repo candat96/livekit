@@ -1,0 +1,24 @@
+port: 7880
+bind_addresses:
+  - "0.0.0.0"
+
+rtc:
+  port_range_start: 50000
+  port_range_end: 50020
+  tcp_port: 7881
+  use_external_ip: true
+  node_ip: 194.233.66.68
+
+redis:
+  address: redis:6379
+
+keys:
+  apikey: Abc@123
+
+room:
+  auto_create: true
+  empty_timeout: 300
+
+logging:
+  level: info
+  json: false
