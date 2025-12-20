@@ -100,7 +100,7 @@ const styles = {
   },
   videoGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(480px, 1fr))',
     gap: '20px',
     marginTop: '20px',
   },
@@ -112,7 +112,7 @@ const styles = {
   },
   video: {
     width: '100%',
-    height: '250px',
+    height: '480px',
     objectFit: 'cover',
     background: '#000',
   },
@@ -415,6 +415,7 @@ function App() {
 
 function VideoTile({ participant }) {
   const videoRef = useRef(null);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     if (participant.videoTrack && videoRef.current) {
@@ -425,9 +426,19 @@ function VideoTile({ participant }) {
     }
   }, [participant.videoTrack]);
 
+  useEffect(() => {
+    if (participant.audioTrack && audioRef.current && !participant.isLocal) {
+      participant.audioTrack.attach(audioRef.current);
+      return () => {
+        participant.audioTrack.detach(audioRef.current);
+      };
+    }
+  }, [participant.audioTrack, participant.isLocal]);
+
   return (
     <div style={styles.videoContainer}>
       <video ref={videoRef} style={styles.video} autoPlay playsInline muted={participant.isLocal} />
+      {!participant.isLocal && <audio ref={audioRef} autoPlay />}
       <div style={styles.videoLabel}>
         {participant.identity} {participant.isLocal ? '(You)' : ''}
       </div>
