@@ -1,0 +1,31 @@
+# Egress service configuration
+log_level: info
+
+# API configuration - must match livekit.yaml
+api_key: devkey
+api_secret: secret
+ws_url: ws://livekit:7880
+
+# Redis connection
+redis:
+  address: redis:6379
+
+# Health check port
+health_port: 9090
+
+# CPU cost for different egress types
+cpu_cost:
+  room_composite: 3.0
+  track_composite: 2.0
+  track: 1.0
+
+# File output configuration
+file_output:
+  local: /output
+
+# Template rendering (uses Chrome headless)
+template:
+  # Port range for template rendering
+  port_range:
+    start: 20000
+    end: 20100

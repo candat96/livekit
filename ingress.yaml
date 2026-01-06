@@ -1,0 +1,80 @@
+port: 7880
+rtc:
+  port_range_start: 50000
+  port_range_end: 60000
+  tcp_port: 7881
+  use_external_ip: false
+  # For local development, we don't need STUN/TURN complexity
+  # LiveKit handles ICE candidates automatically
+  enable_loopback_candidate: true
+
+# Redis configuration - connects to the redis service
+redis:
+  address: redis:6379
+  db: 0
+
+# API Keys - for local development/testing
+# Format: api_key: api_secret
+# In production, use strong random values!
+keys:
+  devkey: secret
+  testkey: testsecret123456789012345678901234
+
+# Room settings
+room:
+  # Enable rooms to be created automatically when first participant joins
+  auto_create: true
+  # Empty room timeout (how long to keep empty rooms)
+  empty_timeout: 300s
+  # Maximum participants per room (0 = unlimited)
+  max_participants: 100
+  # Enable end-to-end encryption support
+  enable_e2ee: true
+
+# WebRTC configuration
+webrtc:
+  # Congestion control algorithm
+  congestion_control:
+    enabled: true
+    # Probe bandwidth on startup
+    probe_mode: padding
+  # Enable simulcast for video
+  enable_simulcast: true
+  # Maximum bitrate for video tracks
+  max_bitrate: 10000000  # 10 Mbps
+
+# TURN server configuration for local development
+turn:
+  enabled: true
+  # Domain for TURN (use localhost for local dev)
+  domain: localhost
+  # TURN TLS port
+  tls_port: 7882
+  # External port for TURN over TCP
+  tcp_port: 7881
+  # UDP port range (same as RTC)
+  udp_port: 7882
+
+# Logging configuration
+logging:
+  # Log level: debug, info, warn, error
+  level: info
+  # Pretty print JSON logs (useful for development)
+  json: false
+  # Include sample logs for debugging
+  sample: true
+
+# Webhook configuration (optional - for event notifications)
+# webhook:
+#   urls:
+#     - http://host.docker.internal:3000/livekit/webhook
+#   api_key: devkey
+
+# Rate limiting
+limit:
+  # Maximum number of tracks per participant
+  num_tracks: 50
+  # Maximum bytes per second per connection
+  bytes_per_sec: 100000000  # 100 MB/s
+  # Maximum subscriptions per participant
+  subscriptions_per_participant: 100
